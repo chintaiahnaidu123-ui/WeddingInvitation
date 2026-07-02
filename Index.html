@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chandana & Bhargav — Wedding Invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Pinyon+Script&family=Cinzel:wght@400;600;700&family=Noto+Sans+Telugu:wght@300;400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fbf5eb;
+    --deep-cream: #f2e3c6;
+    --gold: #c59b27;
+    --gold-light: #e6c762;
+    --gold-bright: #ffdf00;
+    --maroon: #800000;
+    --maroon-dark: #4a0404;
+    --saffron: #d96c14;
+    --green: #1b4d29;
+    --text: #2c1a0c;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M50 0 L100 50 L50 100 L0 50 Z" fill="rgba(197, 155, 39, 0.03)"/></svg>');
+    font-family: 'Lato', sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ============================================================
+     WELCOME OVERLAY (FOR AUTOPLAY AUDIO)
+  ============================================================ */
+  #welcomeOverlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, var(--maroon) 0%, var(--maroon-dark) 100%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-light);
+    cursor: pointer;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .overlay-content {
+    text-align: center;
+    animation: pulse 2s infinite;
+  }
+  .overlay-title {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 4rem;
+    margin-bottom: 20px;
+    color: var(--gold-bright);
+    text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+  .overlay-hint {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.3em;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    border: 1px solid var(--gold-light);
+    padding: 12px 24px;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.2);
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  /* ============================================================
+     MANGO LEAF BORDER
+  ============================================================ */
+  .mango-strip {
+    width: 100%;
+    background: linear-gradient(90deg, var(--green), #11361c, var(--green));
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    height: 54px;
+    border-bottom: 3px solid var(--gold);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .mango-leaf { width: 28px; height: 44px; flex-shrink: 0; }
+
+  /* ============================================================
+     HERO
+  ============================================================ */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px 100px;
+  }
+
+  .hero-border {
+    position: absolute;
+    inset: 15px;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .hero-border::after {
+    content:''; position: absolute; inset: 6px;
+    border: 1px dashed var(--gold-light);
+    border-radius: 4px;
+  }
+
+  .ganesh-wrap {
+    position: relative; z-index: 5; margin-bottom: 20px;
+    filter: drop-shadow(0 10px 15px rgba(128, 0, 0, 0.2));
+  }
+
+  .shubh-label {
+    font-family: 'Noto Sans Telugu', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--saffron);
+    letter-spacing: 0.2em;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+    letter-spacing: 0.35em;
+    color: var(--maroon);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+  }
+
+  .hero-invite-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 25px;
+  }
+
+  .hero-name {
+    font-family: 'Pinyon Script', cursive;
+    font-size: clamp(4rem, 12vw, 6rem);
+    color: var(--maroon-dark);
+    line-height: 1;
+    text-shadow: 2px 2px 0px var(--gold-light);
+  }
+
+  .hero-sep {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--saffron);
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .hero-sep::before, .hero-sep::after {
+    content:''; width: 60px; height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-style: italic;
+    color: var(--text);
+    max-width: 450px;
+    line-height: 1.8;
+    margin: 20px auto 0;
+  }
+
+  .date-pill {
+    margin-top: 40px;
+    background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%);
+    color: var(--cream);
+    padding: 16px 50px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.25em;
+    border: 2px solid var(--gold-light);
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(128,0,0,0.3);
+  }
+
+  /* ============================================================
+     SECTIONS
+  ============================================================ */
+  .section-wrap { max-width: 1000px; margin: 0 auto; padding: 80px 24px; }
+  .section-kicker { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.4em; color: var(--saffron); text-transform: uppercase; text-align: center; margin-bottom: 12px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5.5vw, 3.2rem); font-weight: 700; color: var(--maroon-dark); text-align: center; margin-bottom: 20px; line-height: 1.15; }
+  .gold-divider { width: 150px; height: 3px; background: var(--gold); margin: 0 auto 40px; border-radius: 2px; }
+
+  /* Cards */
+  .cards-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  @media (max-width: 768px) { .cards-row { grid-template-columns: 1fr; } }
+  
+  .event-card {
+    background: #fff;
+    border: 1px solid var(--deep-cream);
+    border-radius: 12px;
+    padding: 40px 25px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    border-bottom: 4px solid var(--maroon);
+    transition: transform 0.3s;
+  }
+  .event-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(128,0,0,0.15); }
+  
+  .card-icon { width: 60px; height: 60px; margin: 0 auto 20px; background: var(--cream); border: 2px solid var(--gold-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .card-label { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--maroon); text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
+  .card-value { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .card-sub { font-family: 'Lato', sans-serif; font-size: 0.9rem; color: #555; line-height: 1.6; }
+
+  /* Rituals */
+  .rituals-section { background: linear-gradient(135deg, var(--maroon-dark) 0%, var(--maroon) 100%); padding: 80px 24px; color: var(--cream); }
+  .rituals-section .section-kicker { color: var(--gold-light); }
+  .rituals-section .section-title { color: var(--gold-bright); }
+  .rituals-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  @media (max-width: 680px) { .rituals-grid { grid-template-columns: repeat(2, 1fr); } }
+  .ritual-item { text-align: center; padding: 30px 15px; border: 1px solid rgba(230,199,98,0.3); border-radius: 8px; background: rgba(0,0,0,0.2); }
+  .ritual-emoji { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+  .ritual-name { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.15em; color: var(--gold-bright); text-transform: uppercase; }
+
+  /* Map */
+  .map-frame { width: 100%; height: 450px; border: 4px solid #fff; border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); overflow: hidden; }
+  .map-frame iframe { width: 100%; height: 100%; border: none; }
+  .venue-info { background: #fff; padding: 25px; border-radius: 8px; margin-top: -30px; position: relative; width: 90%; margin-left: auto; margin-right: auto; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); flex-wrap: wrap; gap: 20px; }
+  .btn-directions { background: var(--maroon); color: #fff; padding: 12px 30px; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.15em; border-radius: 50px; transition: 0.3s; }
+  .btn-directions:hover { background: var(--saffron); }
+
+  /* Footer */
+  .blessings-section { padding: 100px 24px; text-align: center; }
+  .closing-names { font-family: 'Pinyon Script', cursive; font-size: 3.5rem; color: var(--maroon); margin-top: 20px; }
+  footer { background: var(--maroon-dark); padding: 30px 20px; text-align: center; color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.3em; }
+
+  .music-toggle { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background: var(--gold); color: #fff; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 100; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+</style>
+</head>
+<body>
+
+<!-- ===== MUSIC AUDIO TAG ===== -->
+<audio id="bgMusic" loop>
+  <source src="http://googleusercontent.com/file_content/0" type="audio/mpeg">
+</audio>
+
+<!-- ===== WELCOME OVERLAY (CLICK TO PLAY) ===== -->
+<div id="welcomeOverlay">
+  <div class="overlay-content">
+    <div class="overlay-title">Chandana & Bhargav</div>
+    <div class="overlay-hint">Tap Anywhere To Open Invitation</div>
+  </div>
+</div>
+
+<div class="mango-strip" id="mangoStrip"></div>
+
+<div class="hero">
+  <div class="hero-border"></div>
+
+  <div class="ganesh-wrap">
+    <svg width="80" height="90" viewBox="0 0 56 60" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="28" cy="22" rx="14" ry="16" fill="#d96c14" opacity="0.9"/>
+      <ellipse cx="12" cy="22" rx="5" ry="7" fill="#800000" opacity="0.8"/>
+      <ellipse cx="44" cy="22" rx="5" ry="7" fill="#800000" opacity="0.8"/>
+      <ellipse cx="12" cy="22" rx="3" ry="5" fill="#ffdf00" opacity="0.6"/>
+      <ellipse cx="44" cy="22" rx="3" ry="5" fill="#ffdf00" opacity="0.6"/>
+      <circle cx="22" cy="18" r="2.5" fill="#4a0404"/>
+      <circle cx="34" cy="18" r="2.5" fill="#4a0404"/>
+      <path d="M28 26 Q22 34 26 42 Q29 46 28 50" stroke="#800000" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M28 26 Q22 34 26 42 Q29 46 28 50" stroke="#ffdf00" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+      <ellipse cx="28" cy="13" rx="3" ry="4" fill="#ffdf00" opacity="0.8"/>
+      <ellipse cx="28" cy="13" rx="1.5" ry="2" fill="#800000" opacity="0.7"/>
+      <path d="M18 10 Q28 4 38 10" stroke="#c59b27" stroke-width="2" fill="none"/>
+      <circle cx="28" cy="5" r="2.5" fill="#ffdf00"/>
+      <ellipse cx="28" cy="50" rx="10" ry="8" fill="#d96c14" opacity="0.6"/>
+    </svg>
+  </div>
+
+  <p class="shubh-label">శుభ వివాహం</p>
+  <p class="hero-eyebrow">With the blessings of our parents & elders</p>
+  <p class="hero-invite-text">We joyfully invite you to celebrate the wedding of</p>
+
+  <div class="hero-name">Chandana</div>
+  <div class="hero-sep">&</div>
+  <div class="hero-name">Bhargav</div>
+
+  <p class="hero-tagline">as they begin a beautiful journey of love, companionship, and togetherness.</p>
+
+  <div class="date-pill">✦ 08 JULY 2026  |  WEDNESDAY ✦</div>
+</div>
+
+<div class="section-wrap">
+  <p class="section-kicker">— వివాహ వేడుక —</p>
+  <h2 class="section-title">Wedding Events</h2>
+  <div class="gold-divider"></div>
+
+  <div class="cards-row">
+    <div class="event-card">
+      <div class="card-icon">🌺</div>
+      <div class="card-label">Gandham & Nalugu</div>
+      <div class="card-value">07 July 2026</div>
+      <div class="card-sub">Tuesday • 9:00 AM<br>At Bride's Residence,<br>Kanuparthipadu</div>
+    </div>
+    <div class="event-card">
+      <div class="card-icon">🍽️</div>
+      <div class="card-label">Reception & Feast</div>
+      <div class="card-value">07 July 2026</div>
+      <div class="card-sub">Tuesday • 6:00 PM Onwards<br>Dinner from 8:00 PM<br>Babu Function Hall</div>
+    </div>
+    <div class="event-card">
+      <div class="card-icon">🪔</div>
+      <div class="card-label">Auspicious Muhurtham</div>
+      <div class="card-value">08 July 2026</div>
+      <div class="card-sub">Wednesday • 6:10 AM - 8:22 AM<br>Pushkara Kalam: 6:40 AM<br>Babu Function Hall</div>
+    </div>
+  </div>
+</div>
+
+<div class="rituals-section">
+  <div class="section-wrap" style="padding:0">
+    <p class="section-kicker">— Telugu Traditions —</p>
+    <h2 class="section-title">Sacred Rituals</h2>
+    <div class="gold-divider" style="background:var(--gold-light)"></div>
+    <div class="rituals-grid">
+      <div class="ritual-item"><span class="ritual-emoji">🌿</span><div class="ritual-name">Nalugu</div></div>
+      <div class="ritual-item"><span class="ritual-emoji">🌸</span><div class="ritual-name">Jeelakarra</div></div>
+      <div class="ritual-item"><span class="ritual-emoji">🔥</span><div class="ritual-name">Saptapadi</div></div>
+      <div class="ritual-item"><span class="ritual-emoji">💛</span><div class="ritual-name">Mangalsutra</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrap">
+  <p class="section-kicker">— Venue —</p>
+  <h2 class="section-title">Find Us Here</h2>
+  <div class="gold-divider"></div>
+
+  <div class="map-frame">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3863.78453412356!2d79.9754123!3d14.4446231!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDI2JzQwLjYiTiA3OcKwNTgnMzEuNSJF!5e0!3m2!1sen!2sin!4v1717000000001!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+  <div class="venue-info">
+    <div>
+      <h3 style="font-family:'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--maroon); margin-bottom:5px;">Babu Function Hall</h3>
+      <p style="color: #666; font-size: 0.9rem;">Y.N.R. Nagar Circle, Manjulamma Colony Base, Nellore</p>
+    </div>
+    <a href="https://www.google.com/maps/search/?api=1&query=Babu+Function+Hall+YNR+Nagar+Nellore" target="_blank" class="btn-directions">Get Directions</a>
+  </div>
+</div>
+
+<div class="blessings-section">
+  <h2 class="section-title">Join Our Celebration</h2>
+  <div class="gold-divider"></div>
+  <p style="font-family:'Cormorant Garamond', serif; font-size: 1.3rem; color: #555; line-height: 1.8; max-width: 600px; margin: 0 auto 30px;">
+    Together with our parents,<br>
+    <strong>Sri Tummapuri Ravi Kumar & Srimati Anuradha</strong><br>
+    <strong>Sri Chilakapoti Venkataiah & Srimati Pullamma</strong><br>
+    we warmly invite you to grace this joyous occasion.
+  </p>
+  <p style="font-family:'Noto Sans Telugu',sans-serif; color:var(--saffron); font-size:1.1rem; margin-bottom:30px;">మీ రాక మాకు చాలా సంతోషాన్నిస్తుంది</p>
+  <p class="section-kicker">Cordially Invited By:</p>
+  <div class="closing-names">Tummapuri Brothers & Family</div>
+</div>
+
+<footer>
+  <div style="font-family:'Noto Sans Telugu', sans-serif; font-size: 1rem; margin-bottom: 10px; color: var(--gold-bright);"></div>
+  © 2026 Chandana & Bhargav ✦ WITH LOVE FROM Tummapuri Family
+</footer>
+
+
+
+<script>
+  // Setup Music & Overlay
+  const overlay = document.getElementById('welcomeOverlay');
+  const bgMusic = document.getElementById('bgMusic');
+  const musicBtn = document.getElementById('musicBtn');
+  let isPlaying = false;
+
+  overlay.addEventListener('click', () => {
+    overlay.style.opacity = '0';
+    setTimeout(() => { overlay.style.display = 'none'; }, 800);
+    
+    bgMusic.play().then(() => {
+      isPlaying = true;
+      musicBtn.innerHTML = '⏸️';
+    }).catch(e => console.log("Audio autoplay prevented"));
+  });
+
+  musicBtn.addEventListener('click', () => {
+    if (isPlaying) {
+      bgMusic.pause();
+      musicBtn.innerHTML = '🎵';
+    } else {
+      bgMusic.play();
+      musicBtn.innerHTML = '⏸️';
+    }
+    isPlaying = !isPlaying;
+  });
+
+  // Mango Leaf Strip
+  const strip = document.getElementById('mangoStrip');
+  const n = Math.ceil(window.innerWidth / 28) + 2;
+  for (let i = 0; i < n; i++) {
+    strip.innerHTML += `<svg class="mango-leaf" viewBox="0 0 28 44" xmlns="http://www.w3.org/2000/svg" style="transform:${i%2===0?'scaleX(-1)':'none'}"><path d="M14 2 Q4 10 5 28 Q8 40 14 42 Q20 40 23 28 Q24 10 14 2Z" fill="#1b4d29"/><path d="M14 4 Q14 20 14 40" stroke="#e6c762" stroke-width="0.8" fill="none"/></svg>`;
+  }
+</script>
+</body>
+</html>
